@@ -18,13 +18,11 @@ export async function registerUserService(req: express.Request, res: express.Res
         password: z.string().min(3),
         login: z.string().min(3)
     })
-    console.log(2)
     const parseResult = schema.safeParse(req.body);
 
     if (parseResult.error) {
         return res.status(400).json({error: "bad data"})
     }
-    console.log(3)
     try {
         const user = await prisma.user.create({
             data: {
@@ -38,13 +36,14 @@ export async function registerUserService(req: express.Request, res: express.Res
             setCookies(req, res, tokens.longToken, tokens.shortToken);
         }
 
-        console.log(4)
         return res.status(200).json({user})
 
 
     } catch (e: any) {
         if (e.code === "P2002"){
             return res.status(400).json({message: "Unique fields error"})
+        } else {
+            return res.status(400).json({error: e.message})
         }
     }
 }
