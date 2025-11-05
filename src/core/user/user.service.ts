@@ -18,13 +18,13 @@ export async function registerUserService(req: express.Request, res: express.Res
         password: z.string().min(3),
         login: z.string().min(3)
     })
-
+    console.log(2)
     const parseResult = schema.safeParse(req.body);
 
     if (parseResult.error) {
         return res.status(400).json({error: "bad data"})
     }
-
+    console.log(3)
     try {
         const user = await prisma.user.create({
             data: {
@@ -38,7 +38,7 @@ export async function registerUserService(req: express.Request, res: express.Res
             setCookies(req, res, tokens.longToken, tokens.shortToken);
         }
 
-
+        console.log(4)
         return res.status(200).json({user})
 
 
@@ -60,6 +60,29 @@ export async function getUserByIdService(req: express.Request, res: express.Resp
     return res.status(200).json({
         id: user.id,
         email: user.email,
-
     })
+}
+export async function loginUserService(req: express.Request, res: express.Response) {
+    const { login, password } = req.body ?? {};
+    if(!login || !password){
+        return res.status(401).json({error: "invalid data"})
+    }
+    let user;
+    user = await prisma.user.findUnique({where: {email: login}})
+    if (!user){
+        user = await prisma.user.findUnique({where: {login: login}})
+    }
+    if(!user){
+        return res.status(401).json({error: "invalid data or not user found"})
+    }
+    const compare = await argon2.verify(user.password, password);
+    if(!compare){
+        return res.status(401).json({error: "invalid password"})
+    }
+
+    const tokens = getTokens(req, res, {id: user.id})
+    setCookies(req, res, tokens.longToken, tokens.shortToken);
+
+    return res.status(200).json({id: user.id, email: user.email})
+
 }
