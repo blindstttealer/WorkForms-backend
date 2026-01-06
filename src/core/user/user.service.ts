@@ -3,7 +3,7 @@ import z from "zod"
 import {prisma} from "../../db";
 import * as argon2 from "argon2";
 import {getTokens} from "../../lib/jwt.utils";
-import {setCookies} from "../../lib/cookie.utils";
+import {clearCookies, setCookies} from "../../lib/cookie.utils";
 import {User} from "../../generated/client";
 
 
@@ -33,6 +33,7 @@ export async function registerUserService(req: express.Request, res: express.Res
         })
         if(user){
             const tokens = getTokens(req, res, {id: user.id})
+            
             setCookies(req, res, tokens.longToken, tokens.shortToken);
         }
 
@@ -56,13 +57,19 @@ export async function getUserByIdService(req: express.Request, res: express.Resp
     if (!user) {
         return res.status(404).json({message: "User not found"})
     }
+
     return res.status(200).json({
         id: user.id,
         email: user.email,
+        login: user.login
     })
 }
 export async function loginUserService(req: express.Request, res: express.Response) {
     const { login, password } = req.body ?? {};
+
+    console.log('login-', login)
+    console.log("password-", password);
+
     if(!login || !password){
         return res.status(401).json({error: "invalid data"})
     }
@@ -82,6 +89,45 @@ export async function loginUserService(req: express.Request, res: express.Respon
     const tokens = getTokens(req, res, {id: user.id})
     setCookies(req, res, tokens.longToken, tokens.shortToken);
 
-    return res.status(200).json({id: user.id, email: user.email})
+    return res.status(200).json({id: user.id, email: user.email, login: user.login})
 
+}
+
+export async function getAllUsersService(
+  req: express.Request,
+  res: express.Response
+) {
+  const currentUserId = req.userId;
+
+  if (!currentUserId) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const users = await prisma.user.findMany({
+    where: {
+      id: { not: currentUserId }, 
+    },
+    select: {
+      id: true,
+      login: true,
+      email: true,
+    },
+  });
+
+  return res.status(200).json(users);
+}
+
+export async function logoutUserService(
+  req: express.Request,
+  res: express.Response
+) {
+  try {
+    clearCookies(req, res);
+    return res.status(200).json({ message: "Logged out successfully" });
+  } catch (error: any) {
+    console.error("Logout error:", error);
+    return res
+      .status(500)
+      .json({ error: "Internal server error during logout" });
+  }
 }

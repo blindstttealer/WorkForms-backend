@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "C:\\Users\\feral\\OneDrive\\Desktop\\test-app\\src\\generated",
+      "value": "C:\\Users\\slava\\WebstormProjects\\teck-react-app-backend\\product-shop-backend\\src\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -36,7 +36,7 @@ const config: runtime.GetPrismaClientConfig = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\feral\\OneDrive\\Desktop\\test-app\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\slava\\WebstormProjects\\teck-react-app-backend\\product-shop-backend\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../prisma",
@@ -46,6 +46,7 @@ const config: runtime.GetPrismaClientConfig = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {

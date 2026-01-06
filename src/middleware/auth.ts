@@ -10,6 +10,7 @@ export function AuthGuard(req: express.Request, res: express.Response, next: exp
     if (!short_token && !long_token){
         return res.status(401).send("No tokens provided");
     }
+
     try {
         const decoded = verifyJwtToken(short_token) as JwtPayload & { id: string };
         req.userId = decoded.id;
@@ -18,7 +19,7 @@ export function AuthGuard(req: express.Request, res: express.Response, next: exp
         try {
             const decoded = verifyJwtToken(long_token) as JwtPayload & { id: string };
             req.userId = decoded.id;
-            setCookies(req, res, long_token, short_token);
+            setCookies(req, res, long_token, !short_token ? long_token : short_token);
             return next()
         } catch (e){
             return res.status(401).send({status: 401, message: "bad tokens", redirect: false});

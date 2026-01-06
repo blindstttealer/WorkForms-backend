@@ -1,16 +1,24 @@
 import express from "express";
-import {getUserByIdService, loginUserService, registerUserService} from "./user.service";
-import {User} from "../../generated/client";
+import {
+  getAllUsersService,
+  getUserByIdService,
+  loginUserService,
+  logoutUserService,
+  registerUserService,
+} from "./user.service";
+import { User } from "../../generated/client";
 
+export const registerUser = (req: express.Request, res: express.Response) =>
+  registerUserService(req, res);
 
-export function registerUser(req: express.Request, res: express.Response) {
-    const user = registerUserService(req, res)
-}
+export const getUserById = (req: express.Request, res: express.Response) =>
+  getUserByIdService(req, res);
 
-export function getUserById(req: express.Request, res: express.Response) {
-    const user = getUserByIdService(req, res)
-}
+export const loginUser = (req: express.Request, res: express.Response) =>
+  loginUserService(req, res);
 
-export function loginUser(req: express.Request, res: express.Response) {
-    const user = loginUserService(req, res)
-}
+export const getUsers = (req: express.Request, res: express.Response) =>
+  getAllUsersService(req, res);
+
+export const logoutUser = (req: express.Request, res: express.Response) =>
+  logoutUserService(req, res);
