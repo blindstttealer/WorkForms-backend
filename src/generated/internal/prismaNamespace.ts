@@ -389,7 +389,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  User: 'User'
+  User: 'User',
+  Settings: 'Settings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user"
+    modelProps: "user" | "settings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -483,6 +484,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Settings: {
+      payload: Prisma.$SettingsPayload<ExtArgs>
+      fields: Prisma.SettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.SettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        findMany: {
+          args: Prisma.SettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        create: {
+          args: Prisma.SettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        createMany: {
+          args: Prisma.SettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.SettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        update: {
+          args: Prisma.SettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.SettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.SettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.SettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSettings>
+        }
+        groupBy: {
+          args: Prisma.SettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -532,6 +607,18 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+export const SettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  displayName: 'displayName',
+  avatarUrl: 'avatarUrl',
+  phone: 'phone',
+  bio: 'bio'
+} as const
+
+export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -546,6 +633,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 
@@ -669,6 +764,7 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  settings?: Prisma.SettingsOmit
 }
 
 /* Types for Logging */
