@@ -9,51 +9,29 @@ export type AggregateSettings = {
 export type SettingsMinAggregateOutputType = {
     id: string | null;
     userId: string | null;
-    displayName: string | null;
-    avatarUrl: string | null;
-    phone: string | null;
-    bio: string | null;
 };
 export type SettingsMaxAggregateOutputType = {
     id: string | null;
     userId: string | null;
-    displayName: string | null;
-    avatarUrl: string | null;
-    phone: string | null;
-    bio: string | null;
 };
 export type SettingsCountAggregateOutputType = {
     id: number;
     userId: number;
-    displayName: number;
-    avatarUrl: number;
-    phone: number;
-    bio: number;
+    data: number;
     _all: number;
 };
 export type SettingsMinAggregateInputType = {
     id?: true;
     userId?: true;
-    displayName?: true;
-    avatarUrl?: true;
-    phone?: true;
-    bio?: true;
 };
 export type SettingsMaxAggregateInputType = {
     id?: true;
     userId?: true;
-    displayName?: true;
-    avatarUrl?: true;
-    phone?: true;
-    bio?: true;
 };
 export type SettingsCountAggregateInputType = {
     id?: true;
     userId?: true;
-    displayName?: true;
-    avatarUrl?: true;
-    phone?: true;
-    bio?: true;
+    data?: true;
     _all?: true;
 };
 export type SettingsAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -83,10 +61,7 @@ export type SettingsGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type SettingsGroupByOutputType = {
     id: string;
     userId: string;
-    displayName: string | null;
-    avatarUrl: string | null;
-    phone: string | null;
-    bio: string | null;
+    data: runtime.JsonValue | null;
     _count: SettingsCountAggregateOutputType | null;
     _min: SettingsMinAggregateOutputType | null;
     _max: SettingsMaxAggregateOutputType | null;
@@ -100,19 +75,13 @@ export type SettingsWhereInput = {
     NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[];
     id?: Prisma.StringFilter<"Settings"> | string;
     userId?: Prisma.StringFilter<"Settings"> | string;
-    displayName?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    avatarUrl?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    phone?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    bio?: Prisma.StringNullableFilter<"Settings"> | string | null;
+    data?: Prisma.JsonNullableFilter<"Settings">;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 };
 export type SettingsOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
-    displayName?: Prisma.SortOrderInput | Prisma.SortOrder;
-    avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder;
-    phone?: Prisma.SortOrderInput | Prisma.SortOrder;
-    bio?: Prisma.SortOrderInput | Prisma.SortOrder;
+    data?: Prisma.SortOrderInput | Prisma.SortOrder;
     user?: Prisma.UserOrderByWithRelationInput;
 };
 export type SettingsWhereUniqueInput = Prisma.AtLeast<{
@@ -121,19 +90,13 @@ export type SettingsWhereUniqueInput = Prisma.AtLeast<{
     AND?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[];
     OR?: Prisma.SettingsWhereInput[];
     NOT?: Prisma.SettingsWhereInput | Prisma.SettingsWhereInput[];
-    displayName?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    avatarUrl?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    phone?: Prisma.StringNullableFilter<"Settings"> | string | null;
-    bio?: Prisma.StringNullableFilter<"Settings"> | string | null;
+    data?: Prisma.JsonNullableFilter<"Settings">;
     user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>;
 }, "id" | "userId">;
 export type SettingsOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
-    displayName?: Prisma.SortOrderInput | Prisma.SortOrder;
-    avatarUrl?: Prisma.SortOrderInput | Prisma.SortOrder;
-    phone?: Prisma.SortOrderInput | Prisma.SortOrder;
-    bio?: Prisma.SortOrderInput | Prisma.SortOrder;
+    data?: Prisma.SortOrderInput | Prisma.SortOrder;
     _count?: Prisma.SettingsCountOrderByAggregateInput;
     _max?: Prisma.SettingsMaxOrderByAggregateInput;
     _min?: Prisma.SettingsMinOrderByAggregateInput;
@@ -144,65 +107,41 @@ export type SettingsScalarWhereWithAggregatesInput = {
     NOT?: Prisma.SettingsScalarWhereWithAggregatesInput | Prisma.SettingsScalarWhereWithAggregatesInput[];
     id?: Prisma.StringWithAggregatesFilter<"Settings"> | string;
     userId?: Prisma.StringWithAggregatesFilter<"Settings"> | string;
-    displayName?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null;
-    avatarUrl?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null;
-    phone?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null;
-    bio?: Prisma.StringNullableWithAggregatesFilter<"Settings"> | string | null;
+    data?: Prisma.JsonNullableWithAggregatesFilter<"Settings">;
 };
 export type SettingsCreateInput = {
     id?: string;
-    displayName?: string | null;
-    avatarUrl?: string | null;
-    phone?: string | null;
-    bio?: string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
     user: Prisma.UserCreateNestedOneWithoutSettingsInput;
 };
 export type SettingsUncheckedCreateInput = {
     id?: string;
     userId: string;
-    displayName?: string | null;
-    avatarUrl?: string | null;
-    phone?: string | null;
-    bio?: string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
     user?: Prisma.UserUpdateOneRequiredWithoutSettingsNestedInput;
 };
 export type SettingsUncheckedUpdateInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsCreateManyInput = {
     id?: string;
     userId: string;
-    displayName?: string | null;
-    avatarUrl?: string | null;
-    phone?: string | null;
-    bio?: string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsUpdateManyMutationInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsUncheckedUpdateManyInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
     userId?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsNullableScalarRelationFilter = {
     is?: Prisma.SettingsWhereInput | null;
@@ -211,26 +150,15 @@ export type SettingsNullableScalarRelationFilter = {
 export type SettingsCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
-    displayName?: Prisma.SortOrder;
-    avatarUrl?: Prisma.SortOrder;
-    phone?: Prisma.SortOrder;
-    bio?: Prisma.SortOrder;
+    data?: Prisma.SortOrder;
 };
 export type SettingsMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
-    displayName?: Prisma.SortOrder;
-    avatarUrl?: Prisma.SortOrder;
-    phone?: Prisma.SortOrder;
-    bio?: Prisma.SortOrder;
 };
 export type SettingsMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     userId?: Prisma.SortOrder;
-    displayName?: Prisma.SortOrder;
-    avatarUrl?: Prisma.SortOrder;
-    phone?: Prisma.SortOrder;
-    bio?: Prisma.SortOrder;
 };
 export type SettingsCreateNestedOneWithoutUserInput = {
     create?: Prisma.XOR<Prisma.SettingsCreateWithoutUserInput, Prisma.SettingsUncheckedCreateWithoutUserInput>;
@@ -260,22 +188,13 @@ export type SettingsUncheckedUpdateOneWithoutUserNestedInput = {
     connect?: Prisma.SettingsWhereUniqueInput;
     update?: Prisma.XOR<Prisma.XOR<Prisma.SettingsUpdateToOneWithWhereWithoutUserInput, Prisma.SettingsUpdateWithoutUserInput>, Prisma.SettingsUncheckedUpdateWithoutUserInput>;
 };
-export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null;
-};
 export type SettingsCreateWithoutUserInput = {
     id?: string;
-    displayName?: string | null;
-    avatarUrl?: string | null;
-    phone?: string | null;
-    bio?: string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsUncheckedCreateWithoutUserInput = {
     id?: string;
-    displayName?: string | null;
-    avatarUrl?: string | null;
-    phone?: string | null;
-    bio?: string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsCreateOrConnectWithoutUserInput = {
     where: Prisma.SettingsWhereUniqueInput;
@@ -292,54 +211,36 @@ export type SettingsUpdateToOneWithWhereWithoutUserInput = {
 };
 export type SettingsUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsUncheckedUpdateWithoutUserInput = {
     id?: Prisma.StringFieldUpdateOperationsInput | string;
-    displayName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    data?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue;
 };
 export type SettingsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     userId?: boolean;
-    displayName?: boolean;
-    avatarUrl?: boolean;
-    phone?: boolean;
-    bio?: boolean;
+    data?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["settings"]>;
 export type SettingsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     userId?: boolean;
-    displayName?: boolean;
-    avatarUrl?: boolean;
-    phone?: boolean;
-    bio?: boolean;
+    data?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["settings"]>;
 export type SettingsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     userId?: boolean;
-    displayName?: boolean;
-    avatarUrl?: boolean;
-    phone?: boolean;
-    bio?: boolean;
+    data?: boolean;
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 }, ExtArgs["result"]["settings"]>;
 export type SettingsSelectScalar = {
     id?: boolean;
     userId?: boolean;
-    displayName?: boolean;
-    avatarUrl?: boolean;
-    phone?: boolean;
-    bio?: boolean;
+    data?: boolean;
 };
-export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "displayName" | "avatarUrl" | "phone" | "bio", ExtArgs["result"]["settings"]>;
+export type SettingsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "data", ExtArgs["result"]["settings"]>;
 export type SettingsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     user?: boolean | Prisma.UserDefaultArgs<ExtArgs>;
 };
@@ -357,10 +258,7 @@ export type $SettingsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: string;
         userId: string;
-        displayName: string | null;
-        avatarUrl: string | null;
-        phone: string | null;
-        bio: string | null;
+        data: runtime.JsonValue | null;
     }, ExtArgs["result"]["settings"]>;
     composites: {};
 };
@@ -421,10 +319,7 @@ export interface Prisma__SettingsClient<T, Null = never, ExtArgs extends runtime
 export interface SettingsFieldRefs {
     readonly id: Prisma.FieldRef<"Settings", 'String'>;
     readonly userId: Prisma.FieldRef<"Settings", 'String'>;
-    readonly displayName: Prisma.FieldRef<"Settings", 'String'>;
-    readonly avatarUrl: Prisma.FieldRef<"Settings", 'String'>;
-    readonly phone: Prisma.FieldRef<"Settings", 'String'>;
-    readonly bio: Prisma.FieldRef<"Settings", 'String'>;
+    readonly data: Prisma.FieldRef<"Settings", 'Json'>;
 }
 export type SettingsFindUniqueArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     select?: Prisma.SettingsSelect<ExtArgs> | null;

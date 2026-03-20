@@ -69,12 +69,7 @@ let UserService = class UserService {
         const settings = await this.settingsService.getSettings(userId);
         return {
             user,
-            settings: settings ?? {
-                displayName: null,
-                avatarUrl: null,
-                phone: null,
-                bio: null,
-            },
+            settings: settings ?? getDefaultSettings(),
         };
     }
     async saveSettings(userId, dto) {
@@ -106,4 +101,43 @@ exports.UserService = UserService = __decorate([
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,
         settings_service_1.SettingsService])
 ], UserService);
+function getDefaultSettings() {
+    return {
+        profile: {
+            name: "",
+            jobTitle: "",
+            experience: "",
+            location: "",
+            skills: [],
+            bio: "",
+            photo: "",
+        },
+        jobPreferences: {
+            jobType: [],
+            workLocation: "",
+            salaryMin: "",
+            salaryMax: "",
+            industries: [],
+            willingToRelocate: false,
+        },
+        notifications: {
+            alerts: {
+                jobMatches: false,
+                applicationUpdates: false,
+                interviewReminders: false,
+                careerInsights: false,
+            },
+            notificationStyle: "both",
+        },
+        privacy: {
+            showSalaryExpectations: false,
+            showContactInfo: false,
+            allowRecruiterMessages: false,
+        },
+        account: {
+            email: "",
+            language: "en",
+        },
+    };
+}
 //# sourceMappingURL=user.service.js.map

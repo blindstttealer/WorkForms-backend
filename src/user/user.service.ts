@@ -10,8 +10,11 @@ import { RegisterUserDto } from "./dto/register-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { SaveSettingsDto } from "./dto/save-settings.dto";
 import { User } from "../generated/client";
-import { UserPublic } from "./types/user.types";
-import { UserProfileResponse } from "./types/user.types";
+import {
+  UserPublic,
+  UserProfileResponse,
+  UserSettings,
+} from "./types/user.types";
 import { toUserPublic } from "./mappers/user.mapper";
 import { SettingsService } from "./settings.service";
 
@@ -77,12 +80,7 @@ export class UserService {
     const settings = await this.settingsService.getSettings(userId);
     return {
       user,
-      settings: settings ?? {
-        displayName: null,
-        avatarUrl: null,
-        phone: null,
-        bio: null,
-      },
+      settings: settings ?? getDefaultSettings(),
     };
   }
 
@@ -116,4 +114,44 @@ export class UserService {
   hashPassword(password: string): Promise<string> {
     return argon2.hash(password);
   }
+}
+
+function getDefaultSettings(): UserSettings {
+  return {
+    profile: {
+      name: "",
+      jobTitle: "",
+      experience: "",
+      location: "",
+      skills: [],
+      bio: "",
+      photo: "",
+    },
+    jobPreferences: {
+      jobType: [],
+      workLocation: "",
+      salaryMin: "",
+      salaryMax: "",
+      industries: [],
+      willingToRelocate: false,
+    },
+    notifications: {
+      alerts: {
+        jobMatches: false,
+        applicationUpdates: false,
+        interviewReminders: false,
+        careerInsights: false,
+      },
+      notificationStyle: "both",
+    },
+    privacy: {
+      showSalaryExpectations: false,
+      showContactInfo: false,
+      allowRecruiterMessages: false,
+    },
+    account: {
+      email: "",
+      language: "en",
+    },
+  };
 }

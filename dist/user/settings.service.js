@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SettingsService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const user_mapper_1 = require("./mappers/user.mapper");
 let SettingsService = class SettingsService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -21,21 +20,18 @@ let SettingsService = class SettingsService {
         const settings = await this.prisma.settings.findUnique({
             where: { userId },
         });
-        return settings ? (0, user_mapper_1.toUserSettings)(settings) : null;
+        if (!settings?.data)
+            return null;
+        return settings.data;
     }
     async saveSettings(userId, dto) {
-        const data = {
-            displayName: dto.displayName || null,
-            avatarUrl: dto.avatarUrl || null,
-            phone: dto.phone || null,
-            bio: dto.bio || null,
-        };
+        const data = dto;
         const settings = await this.prisma.settings.upsert({
             where: { userId },
-            create: { userId, ...data },
-            update: data,
+            create: { userId, data },
+            update: { data },
         });
-        return (0, user_mapper_1.toUserSettings)(settings);
+        return settings.data;
     }
 };
 exports.SettingsService = SettingsService;

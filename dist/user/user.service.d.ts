@@ -3,8 +3,7 @@ import { RegisterUserDto } from "./dto/register-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { SaveSettingsDto } from "./dto/save-settings.dto";
 import { User } from "../generated/client";
-import { UserPublic } from "./types/user.types";
-import { UserProfileResponse } from "./types/user.types";
+import { UserPublic, UserProfileResponse } from "./types/user.types";
 import { SettingsService } from "./settings.service";
 export declare class UserService {
     private readonly prisma;

@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { SaveSettingsDto } from "./dto/save-settings.dto";
 import { UserSettings } from "./types/user.types";
-import { toUserSettings } from "./mappers/user.mapper";
+import { Prisma } from "../generated/client";
 
 @Injectable()
 export class SettingsService {
@@ -12,26 +12,22 @@ export class SettingsService {
     const settings = await this.prisma.settings.findUnique({
       where: { userId },
     });
-    return settings ? toUserSettings(settings) : null;
+    if (!settings?.data) return null;
+    return settings.data as unknown as UserSettings;
   }
 
   async saveSettings(
     userId: string,
     dto: SaveSettingsDto,
   ): Promise<UserSettings> {
-    const data = {
-      displayName: dto.displayName || null,
-      avatarUrl: dto.avatarUrl || null,
-      phone: dto.phone || null,
-      bio: dto.bio || null,
-    };
+    const data = dto as unknown as Prisma.InputJsonValue;
 
     const settings = await this.prisma.settings.upsert({
       where: { userId },
-      create: { userId, ...data },
-      update: data,
+      create: { userId, data },
+      update: { data },
     });
 
-    return toUserSettings(settings);
+    return settings.data as unknown as UserSettings;
   }
 }
