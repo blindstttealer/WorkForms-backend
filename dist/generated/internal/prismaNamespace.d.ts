@@ -383,10 +383,7 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export declare const SettingsScalarFieldEnum: {
     readonly id: "id";
     readonly userId: "userId";
-    readonly displayName: "displayName";
-    readonly avatarUrl: "avatarUrl";
-    readonly phone: "phone";
-    readonly bio: "bio";
+    readonly data: "data";
 };
 export type SettingsScalarFieldEnum = (typeof SettingsScalarFieldEnum)[keyof typeof SettingsScalarFieldEnum];
 export declare const SortOrder: {
@@ -394,11 +391,47 @@ export declare const SortOrder: {
     readonly desc: "desc";
 };
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export declare const NullableJsonNullValueInput: {
+    readonly DbNull: {
+        "__#private@#private": any;
+        _getNamespace(): string;
+        _getName(): string;
+        toString(): string;
+    };
+    readonly JsonNull: {
+        "__#private@#private": any;
+        _getNamespace(): string;
+        _getName(): string;
+        toString(): string;
+    };
+};
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 export declare const QueryMode: {
     readonly default: "default";
     readonly insensitive: "insensitive";
 };
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode];
+export declare const JsonNullValueFilter: {
+    readonly DbNull: {
+        "__#private@#private": any;
+        _getNamespace(): string;
+        _getName(): string;
+        toString(): string;
+    };
+    readonly JsonNull: {
+        "__#private@#private": any;
+        _getNamespace(): string;
+        _getName(): string;
+        toString(): string;
+    };
+    readonly AnyNull: {
+        "__#private@#private": any;
+        _getNamespace(): string;
+        _getName(): string;
+        toString(): string;
+    };
+};
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
 export declare const NullsOrder: {
     readonly first: "first";
     readonly last: "last";
@@ -406,6 +439,8 @@ export declare const NullsOrder: {
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
 export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>;
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>;
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>;
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>;
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>;
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>;
 export type BatchPayload = {

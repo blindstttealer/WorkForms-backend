@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.SettingsScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.JsonNullValueFilter = exports.QueryMode = exports.NullableJsonNullValueInput = exports.SortOrder = exports.SettingsScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = require("@prisma/client/runtime/index-browser");
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -30,18 +30,24 @@ exports.UserScalarFieldEnum = {
 exports.SettingsScalarFieldEnum = {
     id: 'id',
     userId: 'userId',
-    displayName: 'displayName',
-    avatarUrl: 'avatarUrl',
-    phone: 'phone',
-    bio: 'bio'
+    data: 'data'
 };
 exports.SortOrder = {
     asc: 'asc',
     desc: 'desc'
 };
+exports.NullableJsonNullValueInput = {
+    DbNull: exports.DbNull,
+    JsonNull: exports.JsonNull
+};
 exports.QueryMode = {
     default: 'default',
     insensitive: 'insensitive'
+};
+exports.JsonNullValueFilter = {
+    DbNull: exports.DbNull,
+    JsonNull: exports.JsonNull,
+    AnyNull: exports.AnyNull
 };
 exports.NullsOrder = {
     first: 'first',
