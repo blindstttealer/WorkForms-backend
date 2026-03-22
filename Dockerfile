@@ -3,22 +3,17 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 
-# Install all dependencies (including dev for build)
 RUN npm ci
 
-# Generate Prisma client (schema only, no DB connection needed)
-# Dummy DATABASE_URL required by prisma.config.ts - generate doesn't connect to DB
+# Prisma generate needs DATABASE_URL to load config, but doesn't connect to DB
 ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
 RUN npx prisma generate
 
-# Copy source code
 COPY . .
-
-# Build NestJS app
 RUN npm run build
 
 # Production stage
@@ -26,24 +21,18 @@ FROM node:20-alpine AS production
 
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
-
-# Install production dependencies only
 RUN npm ci --omit=dev
 
-# Copy Prisma schema and migrations
+# Prisma schema + migrations (for prisma migrate deploy at startup)
 COPY --from=builder /app/prisma ./prisma
 
-# Copy built application
+# Generated Prisma client with linux-musl query engine binary
+COPY --from=builder /app/src/generated ./src/generated
+
+# Compiled NestJS application
 COPY --from=builder /app/dist ./dist
 
-# Generate Prisma client for this platform (creates engine in node_modules/.prisma)
-# Dummy URL only for this RUN - not in image, so docker-compose/Railway DATABASE_URL works at runtime
-RUN DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder" npx prisma generate
-
-# Expose port (Railway sets PORT env var)
 EXPOSE 3000
 
-# Run migrations and start the app
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main.js"]
