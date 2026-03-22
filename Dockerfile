@@ -41,6 +41,7 @@ COPY --from=builder /app/dist ./dist
 # Generate Prisma client for this platform (creates engine in node_modules/.prisma)
 ENV DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder"
 RUN npx prisma generate
+ENV DATABASE_URL=
 
 # Expose port (Railway sets PORT env var)
 EXPOSE 3000
