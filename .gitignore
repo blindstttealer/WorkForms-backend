@@ -1,12 +1,24 @@
-/tmp
-/out-tsc
-/src/generated
+# Node modules
 /node_modules
+
+# Build output
+/dist
+/out-tsc
+
+# Prisma generated files
+/src/generated
+/src/generated/prisma
+/prisma/generated
+
+# Temporary / logs
+/tmp
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-/.pnp
-.pnp.js
 
+# IDE
 .vscode/*
-/src/generated/prisma
+
+# Yarn PnP
+.pnp
+.pnp.js
