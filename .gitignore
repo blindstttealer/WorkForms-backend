@@ -19,6 +19,9 @@ yarn-error.log*
 # IDE
 .vscode/*
 
+# Env (секреты, не коммитить)
+.env
+
 # Yarn PnP
 .pnp
 .pnp.js
