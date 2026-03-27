@@ -8,8 +8,11 @@ import {User} from "../../generated/client";
 
 
 export async function registerUserService(req: express.Request, res: express.Response) {
+    console.log("[registerUserService] Endpoint reached. Body:", JSON.stringify(req.body ?? {}));
+
     const { email, password, login } = req.body ?? {};
     if(!email || !password || !login){
+        console.warn("[registerUserService] Missing required fields — email, password, or login is absent");
         return res.status(401).json({error: "invalid data"});
     }
 
@@ -21,8 +24,11 @@ export async function registerUserService(req: express.Request, res: express.Res
     const parseResult = schema.safeParse(req.body);
 
     if (parseResult.error) {
+        console.warn("[registerUserService] Validation failed:", parseResult.error.format());
         return res.status(400).json({error: "bad data"})
     }
+
+    console.log("[registerUserService] Validation passed. Calling prisma.user.create() with email:", email, "login:", login);
     try {
         const user = await prisma.user.create({
             data: {
@@ -31,15 +37,24 @@ export async function registerUserService(req: express.Request, res: express.Res
                 login,
             }
         })
+        console.log("[registerUserService] prisma.user.create() succeeded. New user id:", user?.id);
+
         if(user){
             const tokens = getTokens(req, res, {id: user.id})
             setCookies(req, res, tokens.longToken, tokens.shortToken);
         }
 
+        console.log("[registerUserService] Returning 200 response for user id:", user?.id);
         return res.status(200).json({user})
 
 
     } catch (e: any) {
+        console.error("[registerUserService] Error during prisma.user.create():", {
+            message: e?.message,
+            code: e?.code,
+            meta: e?.meta,
+            stack: e?.stack,
+        });
         if (e.code === "P2002"){
             return res.status(400).json({message: "Unique fields error"})
         } else {
