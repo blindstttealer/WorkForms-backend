@@ -1,16 +1,18 @@
 import express from "express";
 import {getUserByIdService, loginUserService, registerUserService} from "./user.service";
-import {User} from "../../generated/client";
 
 
-export function registerUser(req: express.Request, res: express.Response) {
-    const user = registerUserService(req, res)
+export async function registerUser(req: express.Request, res: express.Response) {
+    console.log("[registerUser] POST /register called");
+    const result = await registerUserService(req, res);
+    console.log("[registerUser] registerUserService completed");
+    return result;
 }
 
-export function getUserById(req: express.Request, res: express.Response) {
-    const user = getUserByIdService(req, res)
+export async function getUserById(req: express.Request, res: express.Response) {
+    return getUserByIdService(req, res);
 }
 
-export function loginUser(req: express.Request, res: express.Response) {
-    const user = loginUserService(req, res)
+export async function loginUser(req: express.Request, res: express.Response) {
+    return loginUserService(req, res);
 }
