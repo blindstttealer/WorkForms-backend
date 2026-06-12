@@ -3,11 +3,11 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-} from '@nestjs/common';
-import { Request } from 'express';
-import { JwtService } from './jwt.service';
-import { CookieService } from './cookie.service';
-import { Response } from 'express';
+} from "@nestjs/common";
+import { Request } from "express";
+import { JwtService } from "./jwt.service";
+import { CookieService } from "./cookie.service";
+import { Response } from "express";
 
 export interface AuthenticatedRequest extends Request {
   userId: string;
@@ -25,11 +25,11 @@ export class AuthGuard implements CanActivate {
     const request = ctx.getRequest<Request>();
     const response = ctx.getResponse<Response>();
 
-    const shortToken = request.cookies?.['short_token'];
-    const longToken = request.cookies?.['long_token'];
+    const shortToken = request.cookies?.["short_token"];
+    const longToken = request.cookies?.["long_token"];
 
     if (!shortToken && !longToken) {
-      throw new UnauthorizedException('No tokens provided');
+      throw new UnauthorizedException("No tokens provided");
     }
 
     try {
@@ -49,7 +49,7 @@ export class AuthGuard implements CanActivate {
       } catch {
         throw new UnauthorizedException({
           status: 401,
-          message: 'bad tokens',
+          message: "bad tokens",
           redirect: false,
         });
       }
