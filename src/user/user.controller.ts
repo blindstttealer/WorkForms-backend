@@ -1,26 +1,36 @@
 import {
-  Controller,
-  Post,
-  Get,
-  Put,
-  Delete,
   Body,
-  UseGuards,
-  Res,
-  Req,
+  Controller,
+  Delete,
+  Get,
   HttpCode,
   HttpStatus,
   NotFoundException,
+  Post,
+  Req,
+  Res,
 } from "@nestjs/common";
+import {
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from "@nestjs/swagger";
 import { Response } from "express";
 import { UserService } from "./user.service";
 import { JwtService } from "../auth/jwt.service";
 import { CookieService } from "../auth/cookie.service";
-import { AuthGuard, AuthenticatedRequest } from "../auth/auth.guard";
+import { AuthenticatedRequest } from "../auth/auth.guard";
+import { ApiCookieProtected, SWAGGER_TAG_USER } from "../swagger";
 import { RegisterUserDto } from "./dto/register-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
-import { SaveSettingsDto } from "./dto/save-settings.dto";
+import {
+  RegisterUserResponseDto,
+  UserProfileResponseDto,
+  UserPublicResponseDto,
+} from "./dto/user-response.dto";
 
+@ApiTags(SWAGGER_TAG_USER)
 @Controller("api/user")
 export class UserController {
   constructor(
@@ -30,6 +40,8 @@ export class UserController {
   ) {}
 
   @Post("register")
+  @ApiOperation({ summary: "Register; sets auth cookies on success" })
+  @ApiCreatedResponse({ type: RegisterUserResponseDto })
   async register(
     @Body() dto: RegisterUserDto,
     @Res({ passthrough: true }) res: Response,
@@ -47,7 +59,9 @@ export class UserController {
   }
 
   @Post("login")
+  @ApiOperation({ summary: "Login; sets auth cookies on success" })
   @HttpCode(HttpStatus.OK)
+  @ApiOkResponse({ type: UserPublicResponseDto })
   async login(
     @Body() dto: LoginUserDto,
     @Res({ passthrough: true }) res: Response,
@@ -64,7 +78,9 @@ export class UserController {
   }
 
   @Get("me")
-  @UseGuards(AuthGuard)
+  @ApiCookieProtected()
+  @ApiOperation({ summary: "Current user (minimal fields)" })
+  @ApiOkResponse({ type: UserPublicResponseDto })
   async getMe(@Req() req: AuthenticatedRequest) {
     const user = await this.userService.findById(req.userId);
     if (!user) {
@@ -74,7 +90,9 @@ export class UserController {
   }
 
   @Get("profile")
-  @UseGuards(AuthGuard)
+  @ApiCookieProtected()
+  @ApiOperation({ summary: "Profile + settings payload" })
+  @ApiOkResponse({ type: UserProfileResponseDto })
   async getProfile(@Req() req: AuthenticatedRequest) {
     const profile = await this.userService.getProfile(req.userId);
     if (!profile) {
@@ -83,23 +101,16 @@ export class UserController {
     return profile;
   }
 
-  @Put("settings")
-  @UseGuards(AuthGuard)
-  async saveSettings(
-    @Req() req: AuthenticatedRequest,
-    @Body() dto: SaveSettingsDto,
-  ) {
-    return this.userService.saveSettings(req.userId, dto);
-  }
-
   @Get("users")
-  @UseGuards(AuthGuard)
+  @ApiCookieProtected()
+  @ApiOperation({ summary: "List other users (for chat, etc.)" })
   async getUsers(@Req() req: AuthenticatedRequest) {
     return this.userService.findAllExcept(req.userId);
   }
 
   @Delete("logout")
-  @UseGuards(AuthGuard)
+  @ApiCookieProtected()
+  @ApiOperation({ summary: "Clear auth cookies" })
   @HttpCode(HttpStatus.OK)
   async logout(@Res({ passthrough: true }) res: Response) {
     this.cookieService.clearTokens(res);

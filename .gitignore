@@ -10,6 +10,9 @@
 /src/generated/prisma
 /prisma/generated
 
+# Uploaded files (local dev)
+/uploads
+
 # Temporary / logs
 /tmp
 npm-debug.log*
